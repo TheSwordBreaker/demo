@@ -1,13 +1,24 @@
 <?php 
 // DB credentials.
-define('DB_HOST','localhost');
-define('DB_USER','root');
-define('DB_PASS','');
-define('DB_NAME','tms');
+// define('DB_HOST','localhost');
+// define('DB_USER','root');
+// define('DB_PASS','');
+// define('DB_NAME',);
 // Establish database connection.
+
+$dbhost = $_SERVER['RDS_HOSTNAME'];
+$dbport = $_SERVER['RDS_PORT'];
+$dbname = $_SERVER['RDS_DB_NAME'];
+$charset = 'utf8' ;
+
+$dsn = "mysql:host={$dbhost};port={$dbport};dbname={$dbname};charset={$charset}";
+$username = $_SERVER['RDS_USERNAME'];
+$password = $_SERVER['RDS_PASSWORD'];
+
+
 try
 {
-$dbh = new PDO("mysql:host=".DB_HOST.";dbname=".DB_NAME,DB_USER, DB_PASS,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
+$dbh = new PDO($dsn, $username, $password);
 }
 catch (PDOException $e)
 {
